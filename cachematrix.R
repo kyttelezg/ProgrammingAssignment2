@@ -1,15 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+## la funcion devuelve la inversa de una matriz
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+## para que se devuelve la inversa, la matriz ingresada debe ser cuadrada
+##esta primera parte guarda la matriz inversa en el cache del programa
+makeCacheMatrix <- function(x = numeric()) {
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setinv <- function(inverse) m <<- inverse
+        getinv <- function() m
+        list(set = set, get = get,
+             setinv = setinv,
+             getinv = getinv)
 }
 
-
-## Write a short comment describing this function
-
+## esta segunda parte calcula inversa de la matriz anteriormente guardada
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        m <- x$getinv()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get()
+        m <- solve(data, ...)
+        x$setinv(m)
+        m
 }
+
+
